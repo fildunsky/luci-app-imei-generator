@@ -82,6 +82,7 @@ function generate.write(self, section)
     luci.sys.exec("echo '" .. full .. "' > /tmp/generated_imei")
     luci.sys.exec("echo '" .. selected .. "' > /tmp/generated_device")
     luci.sys.exec("logger -t imei 'IMEI Generated: " .. full .. " (" .. selected .. ")'")
+    luci.sys.exec("rm -f /tmp/imei_log.txt /tmp/imei_applied")
 end
 
 -- Отображение IMEI
@@ -127,6 +128,12 @@ apply.inputtitle = "Write IMEI"
 apply.inputstyle = "apply"
 
 function apply.write(self, section)
+    -- предотвращаем повторное выполнение
+    if nixio.fs.access("/tmp/imei_applied") then
+        luci.http.write("<b>Info:</b> IMEI already written in this session!<br>")
+        return
+    end
+
     local port = port_field:formvalue(section) or "/dev/ttyUSB2"
     local imei = luci.sys.exec("cat /tmp/generated_imei 2>/dev/null"):gsub("%s+", "")
     if imei == "" or #imei ~= 15 then
@@ -154,6 +161,7 @@ function apply.write(self, section)
 
     luci.sys.exec("logger -t imei 'Written IMEI " .. imei .. " to port " .. port .. "'")
     luci.sys.exec("touch /etc/imei_user_set")
+    luci.sys.exec("touch /tmp/imei_applied")
 end
 
 return m
