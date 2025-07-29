@@ -1,2 +1,2 @@
 # This is just for fun, guys
-LuCI interface to generate IMEI on a SIM change for T99W175 modem
+LuCI interface to generate phone IMEI for modem

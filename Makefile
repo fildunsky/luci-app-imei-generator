@@ -21,7 +21,7 @@ define Package/$(PKG_NAME)
 endef
 
 define Package/$(PKG_NAME)/description
-  LuCI interface to generate IMEI on a SIM change for T99W175 modem.
+  LuCI interface to generate phone IMEI for modem
 endef
 
 define Build/Compile
