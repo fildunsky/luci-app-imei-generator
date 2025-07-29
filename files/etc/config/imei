@@ -1,4 +1,4 @@
 
 config imei 'general'
 	option device 'iPhone 15 Pro Max'
-
+	option port '/dev/ttyUSB2'

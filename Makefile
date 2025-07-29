@@ -5,7 +5,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-imei-generator
 PKG_VERSION:=1
-PKG_RELEASE:=1
+PKG_RELEASE:=2
 
 PKG_MAINTAINER:=Fil Dunsky <filipp.dunsky@gmail.com>
 
@@ -16,7 +16,7 @@ define Package/$(PKG_NAME)
   CATEGORY:=LuCI
   SUBMENU:=3. Applications
   TITLE:=IMEI Generator for LuCI
-  DEPENDS:=+luci-base
+  DEPENDS:=+luci-base +atinout
   PKGARCH:=all
 endef
 
