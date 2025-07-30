@@ -28,12 +28,6 @@ generate.inputstyle = "apply"
 local imei_value = d:option(DummyValue, "_imei", "Result IMEI")
 imei_value.rawhtml = true
 
-local imei_nv = d:option(DummyValue, "_nv550", "AT IMEI format")
-imei_nv.rawhtml = true
-
-local imei_at = d:option(DummyValue, "_atcommand", "AT command")
-imei_at.rawhtml = true
-
 local log_output = d:option(DummyValue, "_log", "Execution log")
 log_output.rawhtml = true
 
@@ -88,27 +82,6 @@ end
 -- Отображение IMEI
 function imei_value.cfgvalue()
     return luci.sys.exec("cat /tmp/generated_imei 2>/dev/null"):gsub("%s+", "") or "-"
-end
-
--- Отображение AT-формата
-function imei_nv.cfgvalue()
-    local imei = luci.sys.exec("cat /tmp/generated_imei 2>/dev/null"):gsub("%s+", "")
-    if #imei == 15 then
-        return convert_imei_to_nv550_format(imei)
-    else
-        return "-"
-    end
-end
-
--- Отображение AT-команды
-function imei_at.cfgvalue()
-    local imei = luci.sys.exec("cat /tmp/generated_imei 2>/dev/null"):gsub("%s+", "")
-    if #imei == 15 then
-        local converted = convert_imei_to_nv550_format(imei):gsub(" ", ",")
-        return [[<code>AT^NV=550,9,"]] .. converted .. [["</code>]]
-    else
-        return "-"
-    end
 end
 
 -- Отображение лога
